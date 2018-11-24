@@ -2,51 +2,49 @@
 
 namespace tiFy\Plugins\Pwa;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use League\Container\ContainerInterface;
-use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Route\RouteCollection;
-use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+use tiFy\Contracts\App\AppInterface;
+use tiFy\App\Container\AppServiceProvider;
 use tiFy\Plugins\Pwa\Contracts\PwaManager;
+use tiFy\Plugins\Pwa\Api\PwaApi;
 use tiFy\Plugins\Pwa\Push\PwaPushSend;
 use tiFy\Plugins\Pwa\Push\PwaPushSubscriber;
-use Zend\Diactoros\Response\SapiEmitter;
 
-class PwaServiceProvider extends AbstractServiceProvider
+class PwaServiceProvider extends AppServiceProvider
 {
     /**
      * Liste des services fournis.
      * @var array
      */
     protected $provides = [
+        'pwa',
         'pwa.api',
-        'pwa.db',
-        'pwa.http.request',
-        'pwa.http.zend.emitter',
-        'pwa.http.zend.request',
-        'pwa.http.zend.response',
         'pwa.push.send',
         'pwa.push.subscriber',
         'pwa.router'
     ];
 
     /**
-     * {@inheritdoc}
+     * CONSTRUCTEUR.
+     *
+     * @param AppInterface $app Classe de rappel du controleur de l'application.
+     *
+     * @return void
      */
-    public function boot()
+    public function __construct(AppInterface $app)
     {
+        parent::__construct($app);
 
+        add_action('after_setup_tify', function () {
+            $this->getContainer()->get('pwa');
+        });
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @return PwaManager|ContainerInterface
      */
-    public function getContainer()
+    public function _boot()
     {
-        return parent::getContainer();
+
     }
 
     /**
@@ -54,31 +52,24 @@ class PwaServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->registerHttp();
+        $this->getContainer()->share('pwa', function() {return new Pwa();});
+        $this->registerApi();
         $this->registerPush();
-        $this->registerRouter();
     }
 
     /**
-     * Déclaration du contrôleur de traitement des requêtes HTTP.
+     * Déclaration du contrôleur de routage.
      *
      * @return void
      */
-    public function registerHttp()
+    public function registerApi()
     {
-        $this->getContainer()->share('pwa.http.request', function () {
-            return Request::createFromGlobals();
-        });
-
-        $this->getContainer()->share('pwa.http.zend.emitter', new SapiEmitter());
-
-        $this->getContainer()->share('pwa.http.zend.request', function () {
-            return (new DiactorosFactory())->createRequest($this->getContainer()->get('pwa.http.request'));
-        });
-
-        $this->getContainer()->share('pwa.http.zend.response', function () {
-            return (new DiactorosFactory())->createResponse(new Response());
-        });
+        $this->getContainer()->share(
+            'pwa.api',
+            function () {
+                new PwaApi();
+            }
+        );
     }
 
     /**
@@ -90,27 +81,20 @@ class PwaServiceProvider extends AbstractServiceProvider
     {
         $this->getContainer()->share(
             'pwa.push.send',
-            new PwaPushSend($this->getContainer())
+            function () {
+                new PwaPushSend();
+            }
         );
 
         $this->getContainer()->share(
             'pwa.push.subscriber',
-            new PwaPushSubscriber(
-                'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET,
-                DB_USER,
-                DB_PASSWORD
-            )
+            function () {
+                return new PwaPushSubscriber(
+                    'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET,
+                    DB_USER,
+                    DB_PASSWORD
+                );
+            }
         );
-    }
-
-    /**
-     * Déclaration du contrôleur de routage.
-     *
-     * @return void
-     */
-    public function registerRouter()
-    {
-        $this->getContainer()->share('pwa.api', new PwaApi($this->getContainer()));
-        $this->getContainer()->share('pwa.router', new RouteCollection($this->getContainer()));
     }
 }

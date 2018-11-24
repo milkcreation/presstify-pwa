@@ -19,16 +19,6 @@ class PwaPushSend
     ];
 
     /**
-     * CONSTRUCTEUR.
-     *
-     * @return void
-     */
-    public function __construct(PwaManager $app)
-    {
-        $this->app = $app;
-    }
-
-    /**
      * Instanciation de la classe.
      *
      * @return void
