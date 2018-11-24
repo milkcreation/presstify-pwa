@@ -1,6 +1,6 @@
 <?php
 
-namespace tiFy\Plugins\Pwa;
+namespace tiFy\Plugins\Pwa\Api;
 
 use League\Route\Strategy\JsonStrategy;
 use Psr\Http\Message\ResponseInterface;
@@ -9,18 +9,6 @@ use tiFy\Plugins\Pwa\Contracts\PwaManager;
 
 class PwaApi
 {
-    use PwaResolver;
-
-    /**
-     * CONSTRUCTEUR.
-     *
-     * @return void
-     */
-    public function __construct(PwaManager $app)
-    {
-        $this->app = $app;
-    }
-
     /**
      * CONSTRUCTEUR.
      *
@@ -29,7 +17,7 @@ class PwaApi
     public function __invoke()
     {
         $this->router()->group(
-            '/pwapush/api',
+            '/pwa/api',
             function(\League\Route\RouteGroup $router) {
                 $router->map('GET', '/', [$this, 'root']);
                 $router->map('GET', '/subscriber', [$this, 'addSubscriber']);
@@ -41,10 +29,10 @@ class PwaApi
     /**
      *
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     public function root(ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -55,15 +43,14 @@ class PwaApi
 
     /**
      *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     public function addSubscriber(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $response->getBody()->write(json_encode($this->request()->all()));
+        $response->getBody()->write(json_encode(request()->all()));
 
         return $response->withStatus(200);
     }
