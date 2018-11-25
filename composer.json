@@ -9,7 +9,7 @@
     "pwa"
   ],
   "homepage": "https://svn.tigreblanc.fr/presstify-plugins/pwa",
-  "time": "2018-11-24",
+  "time": "2018-11-25",
   "license": "proprietary",
   "authors": [
     {
@@ -32,7 +32,7 @@
     "composer/installers": "~1.0",
     "illuminate/http": "^5.7",
     "league/container": "^2.4",
-    "league/route": "^3.0",
+    "league/route": "^4.2",
     "minishlink/web-push": "^4.0",
     "presstify/framework": ">=1.4",
     "symfony/psr-http-message-bridge": "^1.0",
