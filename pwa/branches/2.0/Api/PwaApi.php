@@ -3,8 +3,6 @@
 namespace tiFy\Plugins\Pwa\Api;
 
 use League\Route\Strategy\JsonStrategy;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use tiFy\Plugins\Pwa\Contracts\PwaManager;
 
 class PwaApi
@@ -28,30 +26,19 @@ class PwaApi
 
     /**
      *
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     *
-     * @return ResponseInterface
+     * @return array
      */
-    public function root(ServerRequestInterface $request, ResponseInterface $response)
+    public function root()
     {
-        $response->getBody()->write(json_encode(['error' => 'Paramètres manquant']));
-
-        return $response->withStatus(400);
+        return ['error' => 'Paramètres manquant'];
     }
 
     /**
      *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     *
-     * @return ResponseInterface
+     * @return array
      */
-    public function addSubscriber(ServerRequestInterface $request, ResponseInterface $response)
+    public function addSubscriber()
     {
-        $response->getBody()->write(json_encode(request()->all()));
-
-        return $response->withStatus(200);
+        return request()->all();
     }
 }
