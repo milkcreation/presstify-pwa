@@ -1,0 +1,54 @@
+{
+  "name": "presstify-plugins/pwa",
+  "description": "Progressive Web App Manager.",
+  "type": "presstify-plugin",
+  "keywords": [
+    "presstify",
+    "plugins",
+    "wordpress",
+    "pwa"
+  ],
+  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/pwa",
+  "time": "2018-11-27",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Jordy Manner",
+      "email": "jordy.manner@milkcreation.fr",
+      "role": "Lead Developper"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://composer.tigreblanc.fr/presstify/"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "ext-gmp": "*",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "composer/installers": "~1.0",
+    "illuminate/http": "^5.7",
+    "league/container": "^2.4",
+    "league/route": "^4.2",
+    "minishlink/web-push": "^4.0",
+    "presstify/framework": ">=1.4",
+    "symfony/psr-http-message-bridge": "^1.0",
+    "zendframework/zend-diactoros": "^1.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "tiFy\\Plugins\\Pwa\\": ""
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "secure-http": false,
+    "sort-packages": true
+  }
+}
