@@ -6,7 +6,7 @@
  * @author Jordy Manner <jordy@milkcreation.fr>
  * @package presstify-plugins/pwa
  * @namespace \tiFy\Plugins\Pwa
- * @version 2.0.0
+ * @version 1.2.0
  */
 namespace tiFy\Plugins\Pwa;
 
