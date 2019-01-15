@@ -2,7 +2,7 @@
 
 namespace tiFy\Plugins\Pwa;
 
-use tiFy\Plugins\BridgeTify12\Container\ServiceProvider;
+use tiFy\Container\ServiceProvider;
 use tiFy\Plugins\Pwa\Api\PwaApi;
 use tiFy\Plugins\Pwa\Manifest\Manifest;
 use tiFy\Plugins\Pwa\Push\PwaPushSend;
