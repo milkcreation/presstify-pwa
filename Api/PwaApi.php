@@ -14,7 +14,7 @@ class PwaApi
      */
     public function __invoke()
     {
-        $this->router()->group(
+        router()->group(
             '/pwa/api',
             function(\League\Route\RouteGroup $router) {
                 $router->map('GET', '/', [$this, 'root']);
