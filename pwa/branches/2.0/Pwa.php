@@ -1,22 +1,18 @@
 <?php
 
-/**
- * @name Pwa
- * @desc Progressive Web App Manager.
- * @author Jordy Manner <jordy@milkcreation.fr>
- * @package presstify-plugins/pwa
- * @namespace \tiFy\Plugins\Pwa
- * @version 2.0.0
- */
 namespace tiFy\Plugins\Pwa;
 
-use League\Container\Container;
 use tiFy\Plugins\Pwa\Contracts\PwaManager as PwaManagerContract;
 
 /**
  * Class Pwa
  * @package tiFy\Plugins\Pwa
  *
+ * @desc Extension PresstiFy permettant de transformer son site en application web progressive (Progressive Web App).
+ * @author Jordy Manner <jordy@milkcreation.fr>
+ * @package tiFy\Plugins\Pwa
+ * @version 2.0.0
+
  * Activation :
  * ----------------------------------------------------------------------------------------------------
  * Dans config/app.php ajouter \tiFy\Plugins\Pwa\PwaServiceProvider à la liste des fournisseurs de services
@@ -43,14 +39,6 @@ use tiFy\Plugins\Pwa\Contracts\PwaManager as PwaManagerContract;
  */
 final class Pwa
 {
-    use PwaResolver;
-
-    /**
-     * Instance du contrôleur du gestionnaire de ressources.
-     * @var PwaManagerContract
-     */
-    protected $app;
-
     /**
      * CONSTRUCTEUR.
      *
@@ -58,8 +46,6 @@ final class Pwa
      */
     public function __construct()
     {
-        $this->app = $this;
-
         return;
 
         if (request()->get('push') === 'send') :
