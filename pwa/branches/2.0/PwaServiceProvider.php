@@ -2,12 +2,12 @@
 
 namespace tiFy\Plugins\Pwa;
 
-use tiFy\App\Container\AppServiceProvider;
+use tiFy\Container\ServiceProvider;
 use tiFy\Plugins\Pwa\Api\PwaApi;
 use tiFy\Plugins\Pwa\Push\PwaPushSend;
 use tiFy\Plugins\Pwa\Push\PwaPushSubscriber;
 
-class PwaServiceProvider extends AppServiceProvider
+class PwaServiceProvider extends ServiceProvider
 {
     /**
      * Liste des services fournis.
