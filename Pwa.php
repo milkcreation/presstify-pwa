@@ -11,7 +11,7 @@ use tiFy\Plugins\Pwa\Contracts\PwaManager as PwaManagerContract;
  * @desc Extension PresstiFy permettant de transformer son site en application web progressive (Progressive Web App).
  * @author Jordy Manner <jordy@milkcreation.fr>
  * @package tiFy\Plugins\Pwa
- * @version 2.0.1
+ * @version 2.0.0
 
  * Activation :
  * ----------------------------------------------------------------------------------------------------
