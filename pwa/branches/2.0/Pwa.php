@@ -1,8 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace tiFy\Plugins\Pwa;
-
-use tiFy\Plugins\Pwa\Contracts\PwaManager as PwaManagerContract;
 
 /**
  * Class Pwa
