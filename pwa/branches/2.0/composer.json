@@ -8,8 +8,8 @@
     "wordpress",
     "pwa"
   ],
-  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/pwa",
-  "time": "2019-04-12",
+  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/pwa/",
+  "time": "2020-10-26",
   "license": "proprietary",
   "authors": [
     {
@@ -21,22 +21,16 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://composer.tigreblanc.fr/presstify/"
+      "url": "https://composer.tigreblanc.fr/presstify/"
     }
   ],
   "require": {
-    "php": "^7.2",
     "ext-gmp": "*",
     "ext-json": "*",
     "ext-pdo": "*",
     "composer/installers": "~1.0",
-    "illuminate/http": "^5.7",
-    "league/container": "^2.4",
-    "league/route": "^4.2",
     "minishlink/web-push": "^4.0",
-    "presstify/framework": ">=1.4",
-    "symfony/psr-http-message-bridge": "^1.0",
-    "zendframework/zend-diactoros": "^1.7"
+    "presstify/framework": ">=1.4"
   },
   "autoload": {
     "psr-4": {
@@ -48,7 +42,6 @@
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "secure-http": false,
     "sort-packages": true
   }
 }
