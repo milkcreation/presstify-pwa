@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace tiFy\Plugins\Pwa\Api;
 
-use League\Route\Strategy\JsonStrategy;
-use tiFy\Plugins\Pwa\Contracts\PwaManager;
+use tiFy\Contracts\Routing\RouteGroup;
+use tiFy\Support\Proxy\{Request, Router};
 
 class PwaApi
 {
@@ -14,14 +14,10 @@ class PwaApi
      */
     public function __invoke()
     {
-        $this->router()->group(
-            '/pwa/api',
-            function(\League\Route\RouteGroup $router) {
-                $router->map('GET', '/', [$this, 'root']);
-                $router->map('GET', '/subscriber', [$this, 'addSubscriber']);
-            }
-        )
-            ->setStrategy(new JsonStrategy);
+        Router::group('/pwa/api', function(RouteGroup $router) {
+            $router->map('GET', '/', [$this, 'root']);
+            $router->map('GET', '/subscriber', [$this, 'addSubscriber']);
+        })->strategy('json');
     }
 
     /**
@@ -39,6 +35,6 @@ class PwaApi
      */
     public function addSubscriber()
     {
-        return request()->all();
+        return Request::all();
     }
 }

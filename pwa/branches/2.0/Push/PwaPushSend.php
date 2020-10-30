@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace tiFy\Plugins\Pwa\Push;
 
+use ErrorException;
 use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
-use tiFy\Plugins\Pwa\Contracts\PwaManager;
 
 class PwaPushSend
 {
@@ -39,7 +39,7 @@ class PwaPushSend
                     $row['authtoken'],
                     "aesgcm"
                 );
-            } catch (\ErrorException $e) {
+            } catch (ErrorException $e) {
                 continue;
             }
             $notifications[] = compact('subscription', 'payload');
@@ -51,21 +51,21 @@ class PwaPushSend
 
         try {
             $webPush = new WebPush($auth);
-        } catch (\ErrorException $e) {
+        } catch (ErrorException $e) {
             exit($e->getMessage());
         }
 
         foreach ($notifications as $notification) :
             try {
                 $webPush->sendNotification($notification['subscription'], $notification['payload'], false);
-            } catch (\ErrorException $e) {
+            } catch (ErrorException $e) {
                 continue;
             }
         endforeach;
 
         try {
             $webPush->flush();
-        } catch (\ErrorException $e) {
+        } catch (ErrorException $e) {
             exit($e->getMessage());
         }
     }
