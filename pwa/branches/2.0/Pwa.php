@@ -5,6 +5,7 @@ namespace tiFy\Plugins\Pwa;
 use Exception;
 use Psr\Container\ContainerInterface as Container;
 use tiFy\Plugins\Pwa\Contracts\Pwa as PwaContract;
+use tiFy\Plugins\Pwa\Partial\CameraCapturePartial;
 use tiFy\Plugins\Pwa\Partial\InstallPromotionPartial;
 use tiFy\Routing\Strategy\AppStrategy;
 use tiFy\Contracts\Filesystem\LocalFilesystem;
@@ -21,7 +22,7 @@ use tiFy\Support\ParamsBag;
  * @desc Extension PresstiFy permettant de transformer son site en application web progressive (Progressive Web App).
  * @author Jordy Manner <jordy@milkcreation.fr>
  * @package tiFy\Plugins\Pwa
- * @version 2.0.0
+ * @version 2.0.1
  * Activation :
  * ----------------------------------------------------------------------------------------------------
  * Dans config/app.php ajouter \tiFy\Plugins\Pwa\PwaServiceProvider à la liste des fournisseurs de services
@@ -59,6 +60,14 @@ class Pwa implements PwaContract
      * @var bool
      */
     protected bool $booted = false;
+
+    /**
+     * Liste des services par défaut fournis par conteneur d'injection de dépendances.
+     * @var array
+     */
+    protected array $defaultProviders = [
+        'controller' => PwaController::class
+    ];
 
     /**
      * Instance de la configuration associée.
@@ -126,6 +135,7 @@ class Pwa implements PwaContract
             /**/
 
             /** Partials */
+            Partial::register('pwa-camera-capture', (new CameraCapturePartial())->setPwa($this));
             Partial::register('pwa-install-promotion', (new InstallPromotionPartial())->setPwa($this));
             /**/
 
@@ -172,6 +182,14 @@ class Pwa implements PwaContract
     /**
      * @inheritDoc
      */
+    public function provider(string $name)
+    {
+        return $this->config("providers.{$name}", $this->defaultProviders[$name] ?? null);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function resources(?string $path = null)
     {
         if (!isset($this->resources) ||is_null($this->resources)) {
@@ -179,6 +197,22 @@ class Pwa implements PwaContract
         }
 
         return is_null($path) ? $this->resources : $this->resources->path($path);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function resolve(string $alias)
+    {
+        return ($container = $this->getContainer()) ? $container->get("pwa.{$alias}") : null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function resolvable(string $alias): bool
+    {
+        return ($container = $this->getContainer()) && $container->has("pwa.{$alias}");
     }
 
     /**

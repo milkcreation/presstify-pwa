@@ -43,6 +43,33 @@ interface Pwa
     public function getContainer(): ?Container;
 
     /**
+     * Récupération d'un service fourni par le conteneur d'injection de dépendance.
+     *
+     * @param string $name
+     *
+     * @return callable|object|string|null
+     */
+    public function provider(string $name);
+
+    /**
+     * Résolution de service fourni par le gestionnaire d'abonnments.
+     *
+     * @param string $alias
+     *
+     * @return object|mixed|null
+     */
+    public function resolve(string $alias);
+
+    /**
+     * Vérification de résolution possible d'un service fourni par le gestionnaire d'abonnments.
+     *
+     * @param string $alias
+     *
+     * @return bool
+     */
+    public function resolvable(string $alias): bool;
+
+    /**
      * Chemin absolu vers une ressources (fichier|répertoire).
      *
      * @param string $path Chemin relatif vers la ressource.

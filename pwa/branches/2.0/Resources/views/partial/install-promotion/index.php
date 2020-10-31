@@ -15,7 +15,7 @@
     </div>
 
     <div class="PwaInstallPromotion-action">
-        <button class="PwaInstallPromotion-button" class="Install">
+        <button class="PwaButton PwaButton--1 PwaButton--alt PwaInstallPromotion-button" class="Install">
             <?php _e('Installer', 'tify'); ?>
         </button>
     </div>

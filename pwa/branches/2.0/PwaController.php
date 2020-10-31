@@ -5,7 +5,6 @@ namespace tiFy\Plugins\Pwa;
 use tiFy\Contracts\Http\Response;
 use tiFy\Contracts\View\Engine;
 use tiFy\Routing\BaseController;
-use tiFy\Support\Proxy\Partial;
 use tiFy\Support\Proxy\Url;
 use tiFy\Support\Proxy\View;
 
@@ -70,57 +69,7 @@ class PwaController extends BaseController
      */
     protected function getOfflineCss(): string
     {
-        ob_start();
-        ?>
-        body {
-            background-color:#5A0FC8;
-            color:#FFF;
-            font-family:Arial, Helvetica Neue, Helvetica, sans-serif;
-            text-align:center;
-        }
-        .PwaOffline {
-            position: absolute;
-            top:50%;
-            left:0;
-            right:0;
-            transform:translateY(-50%)
-        }
-        .PwaOffline-title {
-            font-weight:bolder;
-            font-size:48px;
-            text-transform:uppercase;
-        }
-        .PwaOffline-icon {
-            width:128px;
-            margin:0 auto;
-        }
-        .PwaOffline-icon > svg {
-            fill:#FFF;
-        }
-        .PwaOffline-button {
-            background-color: #FFF;
-            color: #5A0FC8;
-            padding:10px 30px;
-            border-radius: 5px;
-            border-style: solid;
-            border-width:1px;
-            border-color:#5A0FC8;
-            font-weight:bold;
-            font-size:14px;
-            text-transform:uppercase;
-            transition: color 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out;
-            cursor:pointer;
-        }
-        .PwaOffline-button:hover {
-            border-color:#FFF;
-            background-color:#5A0FC8;
-            color:#FFF;
-        }
-        .PwaOffline-button:focus {
-            outline:none;
-        }
-        <?php
-        return ob_get_clean();
+        return file_get_contents($this->pwa()->resources()->path('assets/css/app/offline.css'));
     }
 
     /**
