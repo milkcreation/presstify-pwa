@@ -20,8 +20,7 @@ class PwaServiceProvider extends ServiceProvider
         'pwa.api',
         'pwa.controller',
         'pwa.push.send',
-        'pwa.push.subscriber',
-        'pwa.router'
+        'pwa.push.subscriber'
     ];
 
     /**
@@ -50,7 +49,17 @@ class PwaServiceProvider extends ServiceProvider
         });
 
         $this->getContainer()->share('pwa.controller', function () {
-            return (new PwaController())->setPwa($this->getContainer()->get('pwa'));
+            /** @var Pwa $manager */
+            $manager = $this->getContainer()->get('pwa');
+
+            $provider = $manager->provider('controller');
+            if (!is_object($provider)) {
+                $provider = new $provider;
+            }
+
+            $provider = $provider instanceof PwaController ? $provider : new PwaController();
+
+            return $provider->setPwa($manager);
         });
 
         $this->getContainer()->share('pwa.push.send', function () {
